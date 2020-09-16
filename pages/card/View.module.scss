@@ -1,0 +1,267 @@
+.entire {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+.entire_reverse {
+  transform: rotateY(180deg);
+  animation: reverseCard 1.5s ease-in-out 0s forwards;
+}
+@keyframes reverseCard {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(180deg);
+  }
+}
+.wrapper {
+  position: absolute;
+  z-index: 2;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #232526, #414345);
+  box-shadow: 2px 2px dimgray;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  &__row {
+    margin: auto 0;
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+}
+.wrapper_back {
+  position: absolute;
+  z-index: 1;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #414345, #232526);
+  font-weight: bold;
+  border-radius: 20px;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  &__row {
+    margin: auto 0;
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+}
+
+.card {
+  @mixin common {
+    margin: 0.1vh 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__ic {
+    @include common;
+    width: 25%;
+    color: white;
+  }
+
+  &__brand_name {
+    @include common;
+    width: 25%;
+    color: white;
+  }
+
+  &__number {
+    @include common;
+    width: 100%;
+    color: white;
+  }
+
+  &__holder {
+    @include common;
+    width: 75%;
+    color: white;
+  }
+
+  &__expires {
+    @include common;
+    width: 25%;
+    color: white;
+  }
+}
+
+.ic_area {
+  @mixin centering {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  width: 95%;
+  height: 95%;
+  @include centering;
+
+  &__content {
+    width: 50%;
+    height: 50%;
+    background: linear-gradient(to right, #ada996, #f2f2f2, #dbdbdb, #eaeaea);
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    @include centering;
+  }
+
+  &__inline_one {
+    width: 75%;
+    height: 75%;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    @include centering;
+  }
+
+  &__inline_two {
+    width: 80%;
+    height: 80%;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    @include centering;
+  }
+}
+
+.card_area {
+  margin: 0.25vh 0.5vw;
+  border-radius: 10px;
+  border: 0.5px solid transparent;
+  width: 100%;
+}
+.card_area_active {
+  @extend .card_area;
+  animation: focusBorderLine 2s linear 0s forwards;
+}
+
+.holder_area {
+  margin: 0.2vh 0.5vw;
+  border-radius: 10px;
+  border: 0.5px solid transparent;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+
+  &__label {
+    margin: 0.1vh 1vw;
+    font-size: 0.5rem;
+    color: gray;
+  }
+
+  &__value {
+    margin: 0.1vh 1vw;
+  }
+}
+.holder_area_active {
+  @extend .holder_area;
+  animation: focusBorderLine 2s linear 0s forwards;
+}
+
+.expires_area {
+  margin: 0.2vh 0.5vw;
+  border-radius: 10px;
+  border: 0.5px solid transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &__label {
+    margin: 0.1vh 1vw;
+    font-size: 0.5rem;
+    color: gray;
+  }
+
+  &__value {
+    margin: 0.1vh 1vw;
+  }
+}
+.expires_area_active {
+  @extend .expires_area;
+  animation: focusBorderLine 2s linear 0s forwards;
+}
+
+@keyframes focusBorderLine {
+  0% {
+    border: 0.5px solid transparent;
+  }
+  100% {
+    border: 0.5px solid white;
+  }
+}
+
+.magnetic_stripe_area {
+  margin: 0.75vh 0;
+  height: 50%;
+  width: 100%;
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+}
+.cvv_area {
+  margin: 0.25vh 0;
+  width: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &__label {
+    margin: 0.05vh 0;
+    padding: 0 1vw;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    font-size: 0.5rem;
+    color: white;
+  }
+
+  &__content {
+    margin: 0.05vh 0;
+    padding: 0 1vw;
+    height: 80%;
+    width: 90%;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+  }
+}
+.back_brand_name_area {
+  margin: 0.75vh 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-direction: column;
+
+  &__content {
+    margin: 0 1vw;
+    color: white;
+  }
+}
