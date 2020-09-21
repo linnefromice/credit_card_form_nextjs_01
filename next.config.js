@@ -1,5 +1,8 @@
-const withSass = require("@zeit/next-sass");
-module.exports = withSass({
-  cssModules: true,
-  assetPrefix: '/credit_card_form_nextjs',
-});
+const path = require('path')
+
+module.exports = {
+  assetPrefix: '/credit_card_form_nextjs_01',
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'components'), path.join(__dirname, 'pages')],
+  },
+}
