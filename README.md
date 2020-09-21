@@ -12,6 +12,13 @@
 yarn dev
 ```
 
+## Link
+
+- Deploy
+  - https://linnefromice.github.io/credit_card_form_nextjs_01/
+- References
+  - https://qiita.com/ozaki25/items/fe9912fc41c3a5c5bfea
+
 # Original
 
 - nextjs project's default README
