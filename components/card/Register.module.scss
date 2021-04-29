@@ -119,6 +119,15 @@
   }
 }
 
+.error {
+  color: #bf1650;
+  
+  &::before {
+    display: inline;
+    content: "⚠ ";
+  }
+}
+
 .card_submit_area {
   @mixin centering {
     display: flex;

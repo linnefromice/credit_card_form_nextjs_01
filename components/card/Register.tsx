@@ -20,6 +20,7 @@ const Register: FC = () => {
     watch,
     handleSubmit,
     setValue,
+    formState: { errors }
   } = useForm<IFormRegister>({
     mode: 'onSubmit',
     defaultValues: {
@@ -91,12 +92,15 @@ const Register: FC = () => {
                 <input
                   className={styles.card_input__input}
                   type="text"
-                  {...register("cardNumber")}
+                  {...register("cardNumber", {
+                    required: true
+                  })}
                   value={processDisplayedCardNumber(watch('cardNumber'))}
                   onChange={(e) => saveCardNumber(e.target.value)}
                   onFocus={() => setFocusCardNumber(true)}
                   onBlur={() => setFocusCardNumber(false)}
                 />
+                {errors.cardNumber && <span className={styles.error}>This field is required</span>}
               </div>
             </div>
             <div className={styles.card_form__row}>
@@ -107,10 +111,13 @@ const Register: FC = () => {
                 <input
                   className={styles.card_input__input}
                   type="text"
-                  {...register("holderName")}
+                  {...register("holderName", {
+                    required: true
+                  })}
                   onFocus={() => setFocusHolderName(true)}
                   onBlur={() => setFocusHolderName(false)}
                 />
+                {errors.holderName && <span className={styles.error}>This field is required</span>}
               </div>
             </div>
             <div className={styles.card_form__row}>
@@ -121,7 +128,9 @@ const Register: FC = () => {
                 <div className={styles.card_expiration_area}>
                   <select
                     className={styles.card_expiration_area__select}
-                    {...register("expirationYear")}
+                    {...register("expirationYear", {
+                      required: true
+                    })}
                     onFocus={() => setFocusYear(true)}
                     onBlur={() => setFocusYear(false)}
                   >
@@ -130,9 +139,12 @@ const Register: FC = () => {
                       return <option value={value}>{value}</option>;
                     })}
                   </select>
+                  {errors.expirationYear && <span className={styles.error}>This field is required</span>}
                   <select
                     className={styles.card_expiration_area__select}
-                    {...register("expirationMonth")}
+                    {...register("expirationMonth", {
+                      required: true
+                    })}
                     onFocus={() => setFocusMonth(true)}
                     onBlur={() => setFocusMonth(false)}
                   >
@@ -141,6 +153,7 @@ const Register: FC = () => {
                       return <option value={value}>{value}</option>;
                     })}
                   </select>
+                  {errors.expirationMonth && <span className={styles.error}>This field is required</span>}
                 </div>
               </div>
               <div className={styles.card_form__group_half}>
@@ -149,11 +162,14 @@ const Register: FC = () => {
                   <input
                     className={styles.card_input__input}
                     type="text"
-                    {...register("cvv")}
+                    {...register("cvv", {
+                      required: true
+                    })}
                     onFocus={() => setFocusCvv(true)}
                     onBlur={() => setFocusCvv(false)}
                   />
                 </div>
+                {errors.cvv && <span className={styles.error}>This field is required</span>}
               </div>
             </div>
             <div
