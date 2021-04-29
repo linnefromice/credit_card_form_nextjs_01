@@ -1,45 +1,16 @@
 import { FC, useState } from "react";
-import { useForm } from "react-hook-form";
-
 import styles from "./Register.module.scss";
 import View from "./View";
 
 const years = [...Array(20).keys()].map((i) => (i += 2020).toString());
 const months = [...Array(12).keys()].map((i) => (i += 1).toString());
 
-interface IFormRegister {
-  cardNumber: string;
-  holderName: string;
-  expirationYear: string;
-  expirationMonth: string;
-  cvv: string;
-}
 const Register: FC = () => {
-  const {
-    register,
-    watch,
-    handleSubmit,
-    setValue,
-    formState: { errors }
-  } = useForm<IFormRegister>({
-    mode: 'onSubmit',
-    defaultValues: {
-      cardNumber: "",
-      holderName: "",
-      expirationYear: "YEAR",
-      expirationMonth: "MONTH",
-      cvv: ""
-    },
-  });
-
-  const onSubmit = (data: IFormRegister) => console.log(data);
-
-  const watchCardNumber = watch('cardNumber');
-  const watchHolderName = watch('holderName');
-  const watchExpirationYear = watch('expirationYear');
-  const watchExpirationMonth = watch('expirationMonth');
-  const watchCvv = watch('cvv');
-
+  const [cardNumber, setCardNumber] = useState<string>("");
+  const [holderName, setHolderName] = useState<string>("");
+  const [year, setYear] = useState<string>("YEAR");
+  const [month, setMonth] = useState<string>("MONTH");
+  const [cvv, setCvv] = useState<string>("");
   const [focusCardNumber, setFocusCardNumber] = useState<boolean>(false);
   const [focusHolderName, setFocusHolderName] = useState<boolean>(false);
   const [focusYear, setFocusYear] = useState<boolean>(false);
@@ -59,20 +30,20 @@ const Register: FC = () => {
       value.length <= 19
         ? value.replace(/\s+/g, "")
         : value.substring(0, 19).replace(/\s+/g, "");
-    number == watchCardNumber && value.length != 20
-      ? setValue('cardNumber' ,number.slice(0, -1))
-      : setValue('cardNumber', number);
+    number == cardNumber && value.length != 20
+      ? setCardNumber(number.slice(0, -1))
+      : setCardNumber(number);
   };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.wrapper__cardArea}>
         <View
-          cardNumber={watchCardNumber}
-          holderName={watchHolderName}
-          year={watchExpirationYear}
-          month={watchExpirationMonth}
-          cvv={watchCvv}
+          cardNumber={cardNumber}
+          holderName={holderName}
+          year={year}
+          month={month}
+          cvv={cvv}
           focusCardNumber={focusCardNumber}
           focusHolderName={focusHolderName}
           focusYear={focusYear}
@@ -82,7 +53,6 @@ const Register: FC = () => {
       </div>
       <div className={styles.wrapper__formArea}>
         <div className={styles.card_form}>
-          <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.card_form__inner}>
             <div className={styles.card_form__row}>
               <div
@@ -92,27 +62,11 @@ const Register: FC = () => {
                 <input
                   className={styles.card_input__input}
                   type="text"
-                  {...register("cardNumber", {
-                    required: "This field is required",
-                    minLength: {
-                      value: 16,
-                      message: "Please enter in 16 digits numbers"
-                    },
-                    maxLength: {
-                      value: 16,
-                      message: "Please enter in 16 digits numbers"
-                    },
-                    pattern: {
-                      value: /[0-9]{16}/,
-                      message: "Please use only number type"
-                    }
-                  })}
-                  value={processDisplayedCardNumber(watch('cardNumber'))}
+                  value={processDisplayedCardNumber(cardNumber)}
                   onChange={(e) => saveCardNumber(e.target.value)}
                   onFocus={() => setFocusCardNumber(true)}
                   onBlur={() => setFocusCardNumber(false)}
                 />
-                {errors.cardNumber && <span className={styles.error}>{errors.cardNumber.message}</span>}
               </div>
             </div>
             <div className={styles.card_form__row}>
@@ -123,13 +77,11 @@ const Register: FC = () => {
                 <input
                   className={styles.card_input__input}
                   type="text"
-                  {...register("holderName", {
-                    required: "This field is required",
-                  })}
+                  value={holderName}
+                  onChange={(e) => setHolderName(e.target.value)}
                   onFocus={() => setFocusHolderName(true)}
                   onBlur={() => setFocusHolderName(false)}
                 />
-                {errors.holderName && <span className={styles.error}>{errors.holderName.message}</span>}
               </div>
             </div>
             <div className={styles.card_form__row}>
@@ -140,9 +92,8 @@ const Register: FC = () => {
                 <div className={styles.card_expiration_area}>
                   <select
                     className={styles.card_expiration_area__select}
-                    {...register("expirationYear", {
-                      required: "This field is required",
-                    })}
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
                     onFocus={() => setFocusYear(true)}
                     onBlur={() => setFocusYear(false)}
                   >
@@ -151,12 +102,10 @@ const Register: FC = () => {
                       return <option value={value}>{value}</option>;
                     })}
                   </select>
-                  {errors.expirationYear && <span className={styles.error}>{errors.expirationYear.message}</span>}
                   <select
                     className={styles.card_expiration_area__select}
-                    {...register("expirationMonth", {
-                      required: "This field is required",
-                    })}
+                    value={month}
+                    onChange={(e) => setMonth(e.target.value)}
                     onFocus={() => setFocusMonth(true)}
                     onBlur={() => setFocusMonth(false)}
                   >
@@ -165,7 +114,6 @@ const Register: FC = () => {
                       return <option value={value}>{value}</option>;
                     })}
                   </select>
-                  {errors.expirationMonth && <span className={styles.error}>{errors.expirationMonth.message}</span>}
                 </div>
               </div>
               <div className={styles.card_form__group_half}>
@@ -174,36 +122,20 @@ const Register: FC = () => {
                   <input
                     className={styles.card_input__input}
                     type="text"
-                    {...register("cvv", {
-                      required: "This field is required",
-                      minLength: {
-                        value: 3,
-                        message: "Please enter in 3 digits numbers"
-                      },
-                      maxLength: {
-                        value: 3,
-                        message: "Please enter in 3 digits numbers"
-                      },
-                    })}
+                    value={cvv}
+                    onChange={(e) => setCvv(e.target.value)}
                     onFocus={() => setFocusCvv(true)}
                     onBlur={() => setFocusCvv(false)}
                   />
                 </div>
-                {errors.cvv && <span className={styles.error}>{errors.cvv.message}</span>}
               </div>
             </div>
             <div
               className={`${styles.card_form__row} ${styles.card_submit_area}`}
             >
-              <button
-                type="submit"
-                className={styles.card_submit_area__button}
-              >
-                SUBMIT
-              </button>
+              <div className={styles.card_submit_area__button}>Submit</div>
             </div>
           </div>
-          </form>
         </div>
       </div>
     </div>
