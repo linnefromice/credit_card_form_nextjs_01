@@ -18,6 +18,7 @@ const Register: FC = () => {
   const {
     register,
     watch,
+    handleSubmit,
     setValue,
   } = useForm<IFormRegister>({
     mode: 'onSubmit',
@@ -29,6 +30,8 @@ const Register: FC = () => {
       cvv: ""
     },
   });
+
+  const onSubmit = (data: IFormRegister) => console.log(data);
 
   const watchCardNumber = watch('cardNumber');
   const watchHolderName = watch('holderName');
@@ -78,6 +81,7 @@ const Register: FC = () => {
       </div>
       <div className={styles.wrapper__formArea}>
         <div className={styles.card_form}>
+          <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.card_form__inner}>
             <div className={styles.card_form__row}>
               <div
@@ -163,6 +167,7 @@ const Register: FC = () => {
               </button>
             </div>
           </div>
+          </form>
         </div>
       </div>
     </div>
