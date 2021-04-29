@@ -12,6 +12,7 @@ interface IFormRegister {
   holderName: string;
   expirationYear: string;
   expirationMonth: string;
+  cvv: string;
 }
 const Register: FC = () => {
   const {
@@ -24,7 +25,8 @@ const Register: FC = () => {
       cardNumber: "",
       holderName: "",
       expirationYear: "YEAR",
-      expirationMonth: "MONTH"
+      expirationMonth: "MONTH",
+      cvv: ""
     },
   });
 
@@ -32,8 +34,8 @@ const Register: FC = () => {
   const watchHolderName = watch('holderName');
   const watchExpirationYear = watch('expirationYear');
   const watchExpirationMonth = watch('expirationMonth');
+  const watchCvv = watch('cvv');
 
-  const [cvv, setCvv] = useState<string>("");
   const [focusCardNumber, setFocusCardNumber] = useState<boolean>(false);
   const [focusHolderName, setFocusHolderName] = useState<boolean>(false);
   const [focusYear, setFocusYear] = useState<boolean>(false);
@@ -66,7 +68,7 @@ const Register: FC = () => {
           holderName={watchHolderName}
           year={watchExpirationYear}
           month={watchExpirationMonth}
-          cvv={cvv}
+          cvv={watchCvv}
           focusCardNumber={focusCardNumber}
           focusHolderName={focusHolderName}
           focusYear={focusYear}
@@ -143,8 +145,7 @@ const Register: FC = () => {
                   <input
                     className={styles.card_input__input}
                     type="text"
-                    value={cvv}
-                    onChange={(e) => setCvv(e.target.value)}
+                    {...register("cvv")}
                     onFocus={() => setFocusCvv(true)}
                     onBlur={() => setFocusCvv(false)}
                   />
