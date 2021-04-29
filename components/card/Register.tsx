@@ -93,14 +93,26 @@ const Register: FC = () => {
                   className={styles.card_input__input}
                   type="text"
                   {...register("cardNumber", {
-                    required: true
+                    required: "This field is required",
+                    minLength: {
+                      value: 16,
+                      message: "Please enter in 16 digits numbers"
+                    },
+                    maxLength: {
+                      value: 16,
+                      message: "Please enter in 16 digits numbers"
+                    },
+                    pattern: {
+                      value: /[0-9]{16}/,
+                      message: "Please use only number type"
+                    }
                   })}
                   value={processDisplayedCardNumber(watch('cardNumber'))}
                   onChange={(e) => saveCardNumber(e.target.value)}
                   onFocus={() => setFocusCardNumber(true)}
                   onBlur={() => setFocusCardNumber(false)}
                 />
-                {errors.cardNumber && <span className={styles.error}>This field is required</span>}
+                {errors.cardNumber && <span className={styles.error}>{errors.cardNumber.message}</span>}
               </div>
             </div>
             <div className={styles.card_form__row}>
@@ -112,12 +124,12 @@ const Register: FC = () => {
                   className={styles.card_input__input}
                   type="text"
                   {...register("holderName", {
-                    required: true
+                    required: "This field is required",
                   })}
                   onFocus={() => setFocusHolderName(true)}
                   onBlur={() => setFocusHolderName(false)}
                 />
-                {errors.holderName && <span className={styles.error}>This field is required</span>}
+                {errors.holderName && <span className={styles.error}>{errors.holderName.message}</span>}
               </div>
             </div>
             <div className={styles.card_form__row}>
@@ -129,7 +141,7 @@ const Register: FC = () => {
                   <select
                     className={styles.card_expiration_area__select}
                     {...register("expirationYear", {
-                      required: true
+                      required: "This field is required",
                     })}
                     onFocus={() => setFocusYear(true)}
                     onBlur={() => setFocusYear(false)}
@@ -139,11 +151,11 @@ const Register: FC = () => {
                       return <option value={value}>{value}</option>;
                     })}
                   </select>
-                  {errors.expirationYear && <span className={styles.error}>This field is required</span>}
+                  {errors.expirationYear && <span className={styles.error}>{errors.expirationYear.message}</span>}
                   <select
                     className={styles.card_expiration_area__select}
                     {...register("expirationMonth", {
-                      required: true
+                      required: "This field is required",
                     })}
                     onFocus={() => setFocusMonth(true)}
                     onBlur={() => setFocusMonth(false)}
@@ -153,7 +165,7 @@ const Register: FC = () => {
                       return <option value={value}>{value}</option>;
                     })}
                   </select>
-                  {errors.expirationMonth && <span className={styles.error}>This field is required</span>}
+                  {errors.expirationMonth && <span className={styles.error}>{errors.expirationMonth.message}</span>}
                 </div>
               </div>
               <div className={styles.card_form__group_half}>
@@ -163,13 +175,21 @@ const Register: FC = () => {
                     className={styles.card_input__input}
                     type="text"
                     {...register("cvv", {
-                      required: true
+                      required: "This field is required",
+                      minLength: {
+                        value: 3,
+                        message: "Please enter in 3 digits numbers"
+                      },
+                      maxLength: {
+                        value: 3,
+                        message: "Please enter in 3 digits numbers"
+                      },
                     })}
                     onFocus={() => setFocusCvv(true)}
                     onBlur={() => setFocusCvv(false)}
                   />
                 </div>
-                {errors.cvv && <span className={styles.error}>This field is required</span>}
+                {errors.cvv && <span className={styles.error}>{errors.cvv.message}</span>}
               </div>
             </div>
             <div
