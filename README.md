@@ -12,7 +12,7 @@
 yarn dev
 ```
 
-![image](images/image_card.mp4)
+![image](images/image_card.gif)
 
 ## Link
 
