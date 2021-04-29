@@ -1,12 +1,29 @@
 import { FC, useState } from "react";
+import { useForm } from "react-hook-form";
+
 import styles from "./Register.module.scss";
 import View from "./View";
 
 const years = [...Array(20).keys()].map((i) => (i += 2020).toString());
 const months = [...Array(12).keys()].map((i) => (i += 1).toString());
 
+interface IFormRegister {
+  cardNumber: string;
+}
 const Register: FC = () => {
-  const [cardNumber, setCardNumber] = useState<string>("");
+  const {
+    register,
+    watch,
+    setValue,
+  } = useForm<IFormRegister>({
+    mode: 'onSubmit',
+    defaultValues: {
+      cardNumber: ""
+    },
+  });
+
+  const watchCardNumber = watch('cardNumber');
+
   const [holderName, setHolderName] = useState<string>("");
   const [year, setYear] = useState<string>("YEAR");
   const [month, setMonth] = useState<string>("MONTH");
@@ -30,16 +47,16 @@ const Register: FC = () => {
       value.length <= 19
         ? value.replace(/\s+/g, "")
         : value.substring(0, 19).replace(/\s+/g, "");
-    number == cardNumber && value.length != 20
-      ? setCardNumber(number.slice(0, -1))
-      : setCardNumber(number);
+    number == watchCardNumber && value.length != 20
+      ? setValue('cardNumber' ,number.slice(0, -1))
+      : setValue('cardNumber', number);
   };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.wrapper__cardArea}>
         <View
-          cardNumber={cardNumber}
+          cardNumber={watchCardNumber}
           holderName={holderName}
           year={year}
           month={month}
@@ -62,7 +79,8 @@ const Register: FC = () => {
                 <input
                   className={styles.card_input__input}
                   type="text"
-                  value={processDisplayedCardNumber(cardNumber)}
+                  {...register("cardNumber")}
+                  value={processDisplayedCardNumber(watch('cardNumber'))}
                   onChange={(e) => saveCardNumber(e.target.value)}
                   onFocus={() => setFocusCardNumber(true)}
                   onBlur={() => setFocusCardNumber(false)}
@@ -133,7 +151,12 @@ const Register: FC = () => {
             <div
               className={`${styles.card_form__row} ${styles.card_submit_area}`}
             >
-              <div className={styles.card_submit_area__button}>Submit</div>
+              <button
+                type="submit"
+                className={styles.card_submit_area__button}
+              >
+                SUBMIT
+              </button>
             </div>
           </div>
         </div>
