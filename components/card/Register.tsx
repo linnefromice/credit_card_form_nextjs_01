@@ -9,6 +9,7 @@ const months = [...Array(12).keys()].map((i) => (i += 1).toString());
 
 interface IFormRegister {
   cardNumber: string;
+  holderName: string;
 }
 const Register: FC = () => {
   const {
@@ -18,13 +19,14 @@ const Register: FC = () => {
   } = useForm<IFormRegister>({
     mode: 'onSubmit',
     defaultValues: {
-      cardNumber: ""
+      cardNumber: "",
+      holderName: ""
     },
   });
 
   const watchCardNumber = watch('cardNumber');
+  const watchHolderName = watch('holderName');
 
-  const [holderName, setHolderName] = useState<string>("");
   const [year, setYear] = useState<string>("YEAR");
   const [month, setMonth] = useState<string>("MONTH");
   const [cvv, setCvv] = useState<string>("");
@@ -57,7 +59,7 @@ const Register: FC = () => {
       <div className={styles.wrapper__cardArea}>
         <View
           cardNumber={watchCardNumber}
-          holderName={holderName}
+          holderName={watchHolderName}
           year={year}
           month={month}
           cvv={cvv}
@@ -95,8 +97,7 @@ const Register: FC = () => {
                 <input
                   className={styles.card_input__input}
                   type="text"
-                  value={holderName}
-                  onChange={(e) => setHolderName(e.target.value)}
+                  {...register("holderName")}
                   onFocus={() => setFocusHolderName(true)}
                   onBlur={() => setFocusHolderName(false)}
                 />
