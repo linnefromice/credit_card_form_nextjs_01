@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { FC, useState, useEffect, useRef } from "react";
 import styles from "./View.module.scss";
 
-const IcArea = () => (
+const IcArea: FC = () => (
   <div className={styles.ic_area}>
     <div className={styles.ic_area__content}>
       <div className={styles.ic_area__inline_one}>
@@ -11,7 +11,7 @@ const IcArea = () => (
   </div>
 );
 
-const BrandNameArea = () => {
+const BrandNameArea: FC = () => {
   const brandNames = [
     "VISA",
     "mastercard",
@@ -52,7 +52,7 @@ interface ViewProp {
   focusMonth: boolean;
   focusCvv: boolean;
 }
-const View = (prop: ViewProp) => {
+const View: FC<ViewProp> = (prop) => {
   const {
     cardNumber,
     holderName,

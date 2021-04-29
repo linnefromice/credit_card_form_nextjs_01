@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import styles from "./Register.module.scss";
 import View from "./View";
 
 const years = [...Array(20).keys()].map((i) => (i += 2020).toString());
 const months = [...Array(12).keys()].map((i) => (i += 1).toString());
 
-const Register = () => {
+const Register: FC = () => {
   const [cardNumber, setCardNumber] = useState<string>("");
   const [holderName, setHolderName] = useState<string>("");
   const [year, setYear] = useState<string>("YEAR");
