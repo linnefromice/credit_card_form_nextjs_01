@@ -10,6 +10,8 @@ const months = [...Array(12).keys()].map((i) => (i += 1).toString());
 interface IFormRegister {
   cardNumber: string;
   holderName: string;
+  expirationYear: string;
+  expirationMonth: string;
 }
 const Register: FC = () => {
   const {
@@ -20,15 +22,17 @@ const Register: FC = () => {
     mode: 'onSubmit',
     defaultValues: {
       cardNumber: "",
-      holderName: ""
+      holderName: "",
+      expirationYear: "YEAR",
+      expirationMonth: "MONTH"
     },
   });
 
   const watchCardNumber = watch('cardNumber');
   const watchHolderName = watch('holderName');
+  const watchExpirationYear = watch('expirationYear');
+  const watchExpirationMonth = watch('expirationMonth');
 
-  const [year, setYear] = useState<string>("YEAR");
-  const [month, setMonth] = useState<string>("MONTH");
   const [cvv, setCvv] = useState<string>("");
   const [focusCardNumber, setFocusCardNumber] = useState<boolean>(false);
   const [focusHolderName, setFocusHolderName] = useState<boolean>(false);
@@ -60,8 +64,8 @@ const Register: FC = () => {
         <View
           cardNumber={watchCardNumber}
           holderName={watchHolderName}
-          year={year}
-          month={month}
+          year={watchExpirationYear}
+          month={watchExpirationMonth}
           cvv={cvv}
           focusCardNumber={focusCardNumber}
           focusHolderName={focusHolderName}
@@ -111,8 +115,7 @@ const Register: FC = () => {
                 <div className={styles.card_expiration_area}>
                   <select
                     className={styles.card_expiration_area__select}
-                    value={year}
-                    onChange={(e) => setYear(e.target.value)}
+                    {...register("expirationYear")}
                     onFocus={() => setFocusYear(true)}
                     onBlur={() => setFocusYear(false)}
                   >
@@ -123,8 +126,7 @@ const Register: FC = () => {
                   </select>
                   <select
                     className={styles.card_expiration_area__select}
-                    value={month}
-                    onChange={(e) => setMonth(e.target.value)}
+                    {...register("expirationMonth")}
                     onFocus={() => setFocusMonth(true)}
                     onBlur={() => setFocusMonth(false)}
                   >
